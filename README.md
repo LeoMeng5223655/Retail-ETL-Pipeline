@@ -13,7 +13,7 @@ In this step, I first dump transaction data from a transaction database. In this
 1). Load data into Snowflake.<br> 
 In order to mimic Snowflake as a transaction database, I need to load the transaction data first. Used to load data into Snowflake. This is a set of data, including dimension tables, store, product, calendar, and fact tables sales and inventory. [Check Script](https://github.com/LeoMeng5223655/Retail-ETL-Pipeline/blob/main/Snow%20Flake/Data%20Ingestion.sql)
 
-2). Create a S3 bucket and S3 Stage in Snowflake.<br>
+2). Create Integration.<br>
 After loading the data into Snowflake, I have to prepare the S3 bucket in AWS for raw data dumping. But I cannot dump data directly into S3 bucket until I create a S3 integration Stage in Snowflake.
 [Check Script](https://github.com/LeoMeng5223655/Retail-ETL-Pipeline/blob/main/Snow%20Flake/Storage%20Integration.sql)
 
