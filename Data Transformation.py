@@ -178,6 +178,4 @@ if __name__ == "__main__":
 
 
 # # Write the Sparksql file to the S3 bucket
-#     df_final.repartition("TRANS_DT").write.mode("overwrite").option("compression", "gzip").parquet(f"s3://aws-project-output-24/date={date_str}")
-
     df_final.repartition(1).write.mode("overwrite").option("csv").parquet(f"s3://aws-project-output-24/date={date_str}")
