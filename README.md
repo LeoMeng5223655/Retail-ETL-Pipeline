@@ -19,4 +19,4 @@ In order to schedule dumping data to S3 bucket from Snowflake, we need to follow
 If your Snowflake account has expired, please create a new account.
 
 2). Load data into Snowflake.
-In order to mimic Snowflake as a transaction database, you need to load the transaction data first. Use below (script) to load data into Snowflake. This is a set of data, including dimension tables, store, product, calendar, and fact tables sales and inventory. This is very similar to what we used in data warehousing. The only difference is that the date is up to date. So you will have a chance to use “today’s” data. 
+In order to mimic Snowflake as a transaction database, you need to load the transaction data first. Use below (script) to load data into Snowflake. This is a set of data, including dimension tables, store, product, calendar, and fact tables sales and inventory. This is very similar to what we used in data warehousing. The only difference is that the date is up to date. So you will have a chance to use “today’s” data.  check [new file]()
