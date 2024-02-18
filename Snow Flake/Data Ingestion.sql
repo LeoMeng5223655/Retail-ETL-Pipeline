@@ -1,7 +1,7 @@
-CREATE DATABASE Retail_Pipeline_Project;
+CREATE DATABASE PROJECT_DB;
 CREATE SCHEMA RAW;
 
-USE DATABASE MIDTERM_DB;
+USE DATABASE PROJECT_DB;
 USE SCHEMA RAW;
 
 create or replace file format csv_comma_skip1_format
@@ -9,16 +9,15 @@ type = 'CSV'
 field_delimiter = ','
 skip_header = 1;
 
-
-create or replace stage wcd_de_midterm_s3_stage
+-- Create a stage and get the data from url
+create or replace stage s3_stage
 file_format = csv_comma_skip1_format
 url = 's3://weclouddata/data/de_midterm_raw/';
 
-list @wcd_de_midterm_s3_stage;
-----------------------------------------------------------------
+PROJECT_DB.RAW.SALES
 
-
-CREATE OR REPLACE TABLE MIDTERM_DB.RAW.store
+-- Dump date into the tables
+CREATE OR REPLACE TABLE PROJECT_DB.RAW.store
 (
     store_key   INTEGER,
     store_num   varchar(30),
@@ -43,7 +42,7 @@ CREATE OR REPLACE TABLE MIDTERM_DB.RAW.store
     longitude   NUMERIC(19, 6)
 );
 
-COPY INTO MIDTERM_DB.RAW.store FROM @wcd_de_midterm_s3_stage/store_mid.csv;
+COPY INTO PROJECT_DB.RAW.store FROM @s3_stage/store_mid.csv;
 
 
 CREATE OR REPLACE TABLE sales(
@@ -61,10 +60,10 @@ sales_mgrn numeric(38,2),
 ship_cost numeric(38,2)
 );
 
-COPY INTO MIDTERM_DB.RAW.sales FROM @wcd_de_midterm_s3_stage/sales_mid.csv;
+COPY INTO PROJECT_DB.RAW.sales FROM @s3_stage/sales_mid.csv;
 
 
-CREATE OR REPLACE TABLE MIDTERM_DB.RAW.calendar
+CREATE OR REPLACE TABLE PROJECT_DB.RAW.calendar
 (   
     cal_dt  date NOT NULL,
     cal_type_desc   varchar(20),
@@ -79,7 +78,7 @@ CREATE OR REPLACE TABLE MIDTERM_DB.RAW.calendar
     yr_qtr_num  integer
 );
 
-COPY INTO MIDTERM_DB.RAW.calendar FROM @wcd_de_midterm_s3_stage/calendar_mid.csv;
+COPY INTO PROJECT_DB.RAW.calendar FROM @s3_stage/calendar_mid.csv;
 
 
 CREATE OR REPLACE TABLE product 
@@ -97,7 +96,7 @@ CREATE OR REPLACE TABLE product
     subcategory_name varchar
 );
 
-COPY INTO MIDTERM_DB.RAW.product FROM @wcd_de_midterm_s3_stage/product_mid.csv;
+COPY INTO PROJECT_DB.RAW.product FROM @s3_stage/product_mid.csv;
 
 
 CREATE OR REPLACE TABLE RAW.inventory (
@@ -112,4 +111,4 @@ promotion_flg boolean,
 next_delivery_dt date
 );
 
-COPY INTO MIDTERM_DB.RAW.inventory FROM @wcd_de_midterm_s3_stage/inventory_mid.csv;
+COPY INTO PROJECT_DB.RAW.inventory FROM @s3_stage/inventory_mid.csv;
